@@ -1,0 +1,29 @@
+################KMEANS################
+
+import matplotlib.pyplot as plt
+import pandas as pd
+from sklearn import datasets
+from sklearn.cluster import KMeans
+
+iris = datasets.load_iris()
+
+X = iris.data[:, :2]
+y = iris.target
+
+km = KMeans(n_clusters = 3)
+km.fit(X)
+
+print(km.cluster_centers_)
+
+figure, axes = plt.subplots(1, 2,figsize=(16,8))
+axes[0].scatter(X[:, 0], X[:, 1], c=y)
+ 
+new_labels = km.labels_
+
+axes[1].scatter(X[:, 0], X[:, 1], c=new_labels)
+axes[0].set_title('Actual')
+axes[1].set_title('Predicted')
+axes[0].set_xlabel('Sepal length')
+axes[0].set_ylabel('Sepal width')
+axes[1].set_xlabel('Sepal length')
+axes[1].set_ylabel('Sepal width')

@@ -1,0 +1,54 @@
+#############SVM##################
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn import svm
+import sklearn.metrics as metric
+
+data1=pd.read_csv('DATA1.csv')
+
+X1=data1['X1']
+X2=data1['X2']
+
+X_training=np.array(list(zip(X1,X2)))
+y_training=data1['Y']
+
+
+plt.scatter(X_training[:,0],X_training[:,1],c=y_training)
+plt.xlabel('X1')
+plt.ylabel('X2');
+#simple plot
+
+svc = svm.SVC(kernel='linear')
+svc.fit(X_training,y_training)
+plt.scatter(X_training[:,0],X_training[:,1],c=y_training)
+plt.xlabel('X1')
+plt.ylabel('X2');
+X,Y = np.mgrid[0:5:100j,0:10:100j]
+Z = svc.decision_function(np.c_[X.ravel(),Y.ravel()])
+Z = Z.reshape(X.shape)
+plt.contour(X,Y,Z,levels=[0])
+plt.title('Linearly Separable')
+#Linearly Separable
+
+
+
+plt.xlabel('X1')
+plt.ylabel('X2');
+Z = svc.decision_function(np.c_[X.ravel(),Y.ravel()])
+Z = Z.reshape(X.shape)
+plt.contour(X,Y,Z, linestyles=['--','-','--'],levels=[-1,0,1])
+plt.scatter(svc.support_vectors_[:,0],svc.support_vectors_[:,1])
+plt.scatter(X_training[:,0],X_training[:,1],c=y_training);
+plt.title('Margin and Support Vectors')
+#support vectors 
+
+
+svc.score(X_training, y_training)
+y_pred=svc.predict(X_training)
+
+y_true = y_training
+
+svc.predict([[3,6]])
+svc.predict([[1,2]])
